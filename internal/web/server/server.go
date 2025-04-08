@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/devfullcycle/imersao22/go-gateway/internal/service"
+	"github.com/devfullcycle/imersao22/go-gateway/internal/wen/handlers"
 	"github.com/go-chi/chi"
 )
 
@@ -20,4 +21,11 @@ func NewServer(accountService *service.AccountService, port string) *Server {
 		accountService: accountService,
 		port:           port,
 	}
+}
+
+func (s *Server) ConfigureRoutes() {
+	accountHandler := handlers.NewAccountHandler(s.accountService)
+
+	s.router.Post("/accounts", accountHandler.Create)
+	s.router.Get("/accounts", accountHandler.Get)
 }
