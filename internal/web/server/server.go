@@ -33,7 +33,7 @@ func (s *Server) ConfigureRoutes() {
 func (s *Server) Start() error {
 	s.server = &http.Server{
 		Addr:    ":" + s.port,
-		Handler: &s.router,
+		Handler: s.router,
 	}
 	return s.server.ListenAndServe()
 }
