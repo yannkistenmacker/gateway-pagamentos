@@ -29,3 +29,11 @@ func (s *Server) ConfigureRoutes() {
 	s.router.Post("/accounts", accountHandler.Create)
 	s.router.Get("/accounts", accountHandler.Get)
 }
+
+func (s *Server) Start() error {
+	s.server = &http.Server{
+		Addr:    ":" + s.port,
+		Handler: &s.router,
+	}
+	return s.server.ListenAndServe()
+}
