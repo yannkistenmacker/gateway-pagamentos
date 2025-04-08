@@ -49,7 +49,7 @@ func (s *AccountService) UpdateBalance(apiKey string, amount float64) (*dto.Acco
 }
 
 func (s *AccountService) FindByAPIKey(apiKey string) (*dto.AccountOutput, error) {
-	account, err = s.repository.FindByAPIKey(apiKey)
+	account, err := s.repository.FindByAPIKey(apiKey)
 	if err != nil {
 		return nil, err
 	}
