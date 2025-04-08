@@ -5,7 +5,7 @@ import (
 
 	"github.com/devfullcycle/imersao22/go-gateway/internal/service"
 	"github.com/devfullcycle/imersao22/go-gateway/internal/web/handlers"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 )
 
 type Server struct {
