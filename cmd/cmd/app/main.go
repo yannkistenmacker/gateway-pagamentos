@@ -1,10 +1,20 @@
 package main
 
 import (
-	"log"
+	"database/sql"
 	"fmt"
+	"log"
+	"os"
+
 	"github.com/joho/godotenv"
 )
+
+func getEnv(key, defaultValue string) string {
+	if value := os.Getenv(key); value != "" {
+		return value
+	}
+	return defaultValue
+}
 
 func main() {
 	if err := godotenv.Load(); err != nil {
@@ -13,12 +23,17 @@ func main() {
 
 	// String connect database
 	connStr := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s"
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		getEnv("DB_HOST", "db"),
 		getEnv("DB_PORT", "54323"),
 		getEnv("DB_USER", "postgres"),
 		getEnv("DB_PASSWORD", "postgres"),
 		getEnv("DB_NAME", "gateway"),
 		getEnv("DB_SSL_MODE", "disable"),
-)
+	)
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatal("Error connecting to database: ", err)
+	}
+	defer db.Close()
 }
