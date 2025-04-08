@@ -6,6 +6,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/devfullcycle/imersao22/go-gateway/internal/repository"
+	"github.com/devfullcycle/imersao22/go-gateway/internal/service"
+	"github.com/devfullcycle/imersao22/go-gateway/internal/web/server"
 	"github.com/joho/godotenv"
 )
 
@@ -36,4 +39,15 @@ func main() {
 		log.Fatal("Error connecting to database: ", err)
 	}
 	defer db.Close()
+
+	accountRepository := repository.NewAccountRepository(db)
+	accountService := service.NewAccountService(accountRepository)
+
+	port := getEnv("HTTP_PORT", "8080")
+	srv := server.NewServer(accountService, port)
+	srv.ConfigureRoutes()
+
+	if err := srv.Start; err != nil {
+		log.Fatal("Error starting server: ", err)
+	}
 }
