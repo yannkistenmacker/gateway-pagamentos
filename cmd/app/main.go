@@ -48,7 +48,7 @@ func main() {
 	srv := server.NewServer(accountService, port)
 	srv.ConfigureRoutes()
 
-	if err := srv.Start; err != nil {
+	if err := srv.Start(); err != nil {
 		log.Fatal("Error starting server: ", err)
 	}
 }
